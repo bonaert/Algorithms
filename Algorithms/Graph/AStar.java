@@ -96,5 +96,26 @@ public class AStar {
         return edges;
     }
 
+    public static void main(String[] args) {
+
+        // Setup graph
+        EdgeWheightedDirectedGraph graph = new EdgeWheightedDirectedGraph(6);
+        graph.addEdge(0, 1, 2);
+        graph.addEdge(0, 2, 5);
+        graph.addEdge(2, 3, 3);
+        graph.addEdge(3, 4, 1);
+        graph.addEdge(4, 5, 1);
+        graph.addEdge(2, 5, 6);
+
+
+        AStar aStar = new AStar(graph, 0, 5);
+        for (DirectedEdge directedEdge : aStar.pathToGoal()) {
+            System.out.println(directedEdge.source() + " -> " + directedEdge.dest());
+        }
+
+        System.out.println(aStar.distToGoal());
+
+    }
+
 
 }
