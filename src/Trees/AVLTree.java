@@ -2,7 +2,7 @@
  * Incomplete ABCD TEST TEST
  */
 
-public class AVLTree<Key extends Comparable<Key>, Value> implements Iterable<Value> {
+/*public class AVLTree<Key extends Comparable<Key>, Value> implements Iterable<Value> {
 
     private Node root;
     private int size;
@@ -11,7 +11,7 @@ public class AVLTree<Key extends Comparable<Key>, Value> implements Iterable<Val
         private Key key;
         private Value value;
         private int height = -1;
-        private Node leftNode, rightNode;
+        private Node leftNode, rightNode, parent;
     }
 
     public AVLTree() {
@@ -55,6 +55,8 @@ public class AVLTree<Key extends Comparable<Key>, Value> implements Iterable<Val
 
         currentNode.key = key;
         currentNode.value = value;
+        currentNode.height = 0;
+
 
         size++;
 
@@ -67,9 +69,9 @@ public class AVLTree<Key extends Comparable<Key>, Value> implements Iterable<Val
         Node currentNode = node;
 
         while (currentNode != root) {
-            if
+            if ()
         }
     }
 
 
-}
+}*/
