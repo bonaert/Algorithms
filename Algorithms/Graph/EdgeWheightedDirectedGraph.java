@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class EdgeWheightedDirectedGraph implements WheightedGraph {
 
     private int edges;
@@ -14,6 +16,7 @@ public class EdgeWheightedDirectedGraph implements WheightedGraph {
         vertices = numberVertices;
         adj = (Bag<DirectedEdge>[]) new Bag[numberVertices];
         edges = 0;
+        Arrays.fill(adj, new Bag<DirectedEdge>());
     }
 
     /**

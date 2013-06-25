@@ -54,10 +54,11 @@ public class AStar {
                     continue;
                 }
 
-                if (!nodesToVisit.contains(neighbor) && score < distTo[neighbor]) {
+                if (score < distTo[neighbor]) {
                     edgeTo[neighbor] = neighborEdge;
                     distTo[neighbor] = score;
-                    nodesToVisit.insert(neighbor, score + heuristic(neighbor, goal));
+                    if (!nodesToVisit.contains(neighbor))
+                        nodesToVisit.insert(neighbor, score + heuristic(neighbor, goal));
                 }
 
             }
@@ -102,6 +103,7 @@ public class AStar {
         EdgeWheightedDirectedGraph graph = new EdgeWheightedDirectedGraph(6);
         graph.addEdge(0, 1, 2);
         graph.addEdge(0, 2, 5);
+        graph.addEdge(1, 2, 2);
         graph.addEdge(2, 3, 3);
         graph.addEdge(3, 4, 1);
         graph.addEdge(4, 5, 1);
