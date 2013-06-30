@@ -1,5 +1,7 @@
 package Algorithms.Trees;
 
+import Algorithms.DataStructure.*;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

@@ -1,5 +1,7 @@
 package Algorithms.DataStructs;
 
+import java.lang.Iterable;
+import java.lang.UnsupportedOperationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
