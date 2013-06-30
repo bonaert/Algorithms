@@ -1,3 +1,5 @@
+package Algorithms.Trees;
+
 import java.util.Comparator;
 
 public class BinarySearch {
