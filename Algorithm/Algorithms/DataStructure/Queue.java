@@ -26,6 +26,21 @@ public class Queue<Item> implements Iterable<Item> {
     }
 
     /**
+     * Provided a queue, that is, an ordered object,
+     * initialized with the provided items.
+     * Through enqueing and dequeuing, this object
+     * provides a first-in first-out(FIFO) ordering.
+     */
+    public Queue(Iterable<Item> items) {
+
+        size = 0;
+        first = null;
+        for (Item item : items) {
+            enqueue(item);
+        }
+    }
+
+    /**
      * Enqueue an item to the queue.
      *
      * @param item, the item

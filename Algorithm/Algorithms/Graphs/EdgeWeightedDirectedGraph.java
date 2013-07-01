@@ -109,6 +109,9 @@ public class EdgeWeightedDirectedGraph implements WheightedGraph {
         return vertices;
     }
 
+    /**
+     * Returns the graph with edges flipped.
+     */
     public EdgeWeightedDirectedGraph reverse() {
 
         EdgeWeightedDirectedGraph reverseGraph = new EdgeWeightedDirectedGraph(vertices);

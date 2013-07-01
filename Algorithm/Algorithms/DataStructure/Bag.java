@@ -15,7 +15,7 @@ public class Bag<Item> implements Iterable<Item> {
     }
 
     /**
-     * Creates a unordered container of object, that can be
+     * Creates a empty container of objects, that can be
      * extended without consideration. It provides an iterator
      * over the values contained in this Bag.
      */
@@ -25,14 +25,29 @@ public class Bag<Item> implements Iterable<Item> {
     }
 
     /**
+     * Creates a container of objects, initialized with the
+     * given items, that can be extended without
+     * consideration. It provides an iterator values
+     * contained in this Bag.
+     */
+    public Bag(Iterable<Item> items) {
+
+        size = 0;
+        first = null;
+        for (Item item : items) {
+            add(item);
+        }
+    }
+
+    /**
      * Adds the item to the bag.
      *
      * @param item, the provided item.
      */
     public void add(Item item) {
-        Node oldfirst = first;
+        Node oldFirst = first;
         first = new Node();
-        first.next = oldfirst;
+        first.next = oldFirst;
         first.item = item;
         size++;
     }

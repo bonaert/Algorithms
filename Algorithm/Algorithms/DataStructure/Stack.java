@@ -25,6 +25,21 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     /**
+     * Provided a stack, that is, an ordered object,
+     * initialized with the provided items.
+     * Through enqueing and dequeuing, this object
+     * provides a first-in first-out(FIFO) ordering.
+     */
+    public Stack(Iterable<Item> items) {
+
+        size = 0;
+        first = null;
+        for (Item item : items) {
+            push(item);
+        }
+    }
+
+    /**
      * Push an item onto the stack.
      *
      * @param item, the item

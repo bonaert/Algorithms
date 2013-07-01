@@ -20,6 +20,18 @@ public class DirectedGraph implements Graph {
         edges = 0;
     }
 
+    public DirectedGraph(DirectedGraph graph){
+
+        edges = graph.edges;
+        vertices = graph.vertices;
+        adj = (Bag<Integer>[]) new Bag[graph.vertices];
+        for (int i = 0; i < graph.vertices; i++) {
+            adj[0] = new Bag(graph.adj(i));
+        }
+
+
+    }
+
     /**
      * Adds an edge from the source vertex to the destination vertex (source -> destination).
      *
@@ -61,6 +73,9 @@ public class DirectedGraph implements Graph {
         return vertices;
     }
 
+    /**
+     * Returns the graph with edges flipped.
+     */
     public DirectedGraph reverse() {
 
         DirectedGraph reverseGraph = new DirectedGraph(vertices);
