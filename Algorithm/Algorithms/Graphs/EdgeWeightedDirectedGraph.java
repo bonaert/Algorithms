@@ -4,7 +4,7 @@ import DataStructure.Bag;
 
 import java.util.Arrays;
 
-public class EdgeWheightedDirectedGraph implements WheightedGraph {
+public class EdgeWeightedDirectedGraph implements WheightedGraph {
 
     private int edges;
     private final int vertices;
@@ -16,7 +16,7 @@ public class EdgeWheightedDirectedGraph implements WheightedGraph {
      *
      * @param numberVertices
      */
-    public EdgeWheightedDirectedGraph(int numberVertices) {
+    public EdgeWeightedDirectedGraph(int numberVertices) {
         vertices = numberVertices;
         adj = (Bag<DirectedEdge>[]) new Bag[numberVertices];
         edges = 0;
@@ -31,6 +31,22 @@ public class EdgeWheightedDirectedGraph implements WheightedGraph {
      * @param wheight
      */
     public void addEdge(int sourceVertex, int destVertex, int wheight) {
+        check(sourceVertex);
+        check(destVertex);
+
+        adj[sourceVertex].add(new DirectedEdge(sourceVertex, destVertex, wheight));
+
+        edges++;
+    }
+
+    /**
+     * Adds an wheighted edge from the source vertex to the destination vertex (source -> destination).
+     *
+     * @param sourceVertex
+     * @param destVertex
+     * @param wheight
+     */
+    public void addEdge(int sourceVertex, int destVertex, double wheight) {
         check(sourceVertex);
         check(destVertex);
 
@@ -91,5 +107,18 @@ public class EdgeWheightedDirectedGraph implements WheightedGraph {
      */
     public int vertices() {
         return vertices;
+    }
+
+    public EdgeWeightedDirectedGraph reverse() {
+
+        EdgeWeightedDirectedGraph reverseGraph = new EdgeWeightedDirectedGraph(vertices);
+
+        for (int source = 0; source < vertices; source++) {
+            for (DirectedEdge edge : adjEdges(source)) {
+                reverseGraph.addEdge(edge.dest(), source, edge.wheight());
+            }
+        }
+
+        return reverseGraph;
     }
 }

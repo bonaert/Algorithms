@@ -56,6 +56,7 @@ public class UndirectedGraph {
         adj[vertexB].add(vertexA);
     }
 
+
     private void check(int vertex) {
         if (vertex < 0 || vertex > vertices) throw new IllegalArgumentException("Invalid vertex");
     }

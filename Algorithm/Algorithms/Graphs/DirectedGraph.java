@@ -60,4 +60,17 @@ public class DirectedGraph implements Graph {
     public int vertices() {
         return vertices;
     }
+
+    public DirectedGraph reverse() {
+
+        DirectedGraph reverseGraph = new DirectedGraph(vertices);
+
+        for (int source = 0; source < vertices; source++) {
+            for (Integer dest : adj(source)) {
+                reverseGraph.addEdge(dest, source);
+            }
+        }
+
+        return reverseGraph;
+    }
 }

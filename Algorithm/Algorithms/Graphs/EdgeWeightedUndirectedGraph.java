@@ -2,7 +2,7 @@ package Graphs;
 
 import DataStructure.Bag;
 
-public class EdgeWheightedUndirectedGraph implements WheightedGraph {
+public class EdgeWeightedUndirectedGraph implements WheightedGraph {
 
     private int edges;
     private final int vertices;
@@ -14,7 +14,7 @@ public class EdgeWheightedUndirectedGraph implements WheightedGraph {
      *
      * @param numberVertices
      */
-    public EdgeWheightedUndirectedGraph(int numberVertices) {
+    public EdgeWeightedUndirectedGraph(int numberVertices) {
         vertices = numberVertices;
         adj = (Bag<UndirectedEdge>[]) new Bag[numberVertices];
         edges = 0;

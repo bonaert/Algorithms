@@ -25,7 +25,7 @@ public class AStar {
      * @param source
      * @param goal
      */
-    public AStar(EdgeWheightedDirectedGraph graph, int source, int goal) {
+    public AStar(EdgeWeightedDirectedGraph graph, int source, int goal) {
 
         distTo = new double[graph.vertices()];
         edgeTo = new DirectedEdge[graph.vertices()];
@@ -41,7 +41,7 @@ public class AStar {
         search(graph);
     }
 
-    private void search(EdgeWheightedDirectedGraph graph) {
+    private void search(EdgeWeightedDirectedGraph graph) {
 
         while (!nodesToVisit.isEmpty()) {
 
@@ -105,7 +105,7 @@ public class AStar {
     public static void main(String[] args) {
 
         // Setup graph
-        EdgeWheightedDirectedGraph graph = new EdgeWheightedDirectedGraph(6);
+        EdgeWeightedDirectedGraph graph = new EdgeWeightedDirectedGraph(6);
         graph.addEdge(0, 1, 2);
         graph.addEdge(0, 2, 5);
         graph.addEdge(1, 2, 2);

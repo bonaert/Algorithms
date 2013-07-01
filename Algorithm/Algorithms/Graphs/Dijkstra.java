@@ -12,7 +12,7 @@ public class Dijkstra {
     private IndexMinPriorityQueue<Double> indexMinPQ;
     private static final double INFINITY = Double.POSITIVE_INFINITY;
 
-    public Dijkstra(EdgeWheightedDirectedGraph graph, int source) {
+    public Dijkstra(EdgeWeightedDirectedGraph graph, int source) {
 
         checkNegativeEdges(graph);
 
@@ -44,7 +44,7 @@ public class Dijkstra {
         }
     }
 
-    private void checkNegativeEdges(EdgeWheightedDirectedGraph graph) {
+    private void checkNegativeEdges(EdgeWeightedDirectedGraph graph) {
         for (DirectedEdge edge : graph.edgesIterator()) {
             if (edge.wheight() < 0) throw new IllegalArgumentException("Negative edges!");
         }
