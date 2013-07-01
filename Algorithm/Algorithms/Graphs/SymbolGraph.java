@@ -2,6 +2,7 @@ package Graphs;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class SymbolGraph {
 
@@ -12,13 +13,13 @@ public class SymbolGraph {
 
     public SymbolGraph(String filename, String delimiter) {
 
-        In in = new In(filename);
+        Scanner scanner = new Scanner(filename);
         keysToIndex = new HashMap<String, Integer>();
 
         // First pass: Find all different vertices
-        while (!in.isEmpty()) {
+        while (scanner.hasNext()) {
 
-            String[] vertices = in.readString().split(delimiter);
+            String[] vertices = scanner.next().split(delimiter);
             for (String vertex : vertices) {
                 if (!keysToIndex.containsKey(vertex)) {
                     keysToIndex.put(vertex, keysToIndex.size());
@@ -34,9 +35,9 @@ public class SymbolGraph {
 
         // Third pass : build graph
         graph = new UndirectedGraph(keys.length);
-        in = new In(filename);
-        while (!in.isEmpty()) {
-            String[] vertices = in.readString().split(delimiter);
+        scanner = new Scanner(filename);
+        while (scanner.hasNext()) {
+            String[] vertices = scanner.next().split(delimiter);
             int sourceIndex = keysToIndex.get(vertices[0]);
             for (int i = 1; i < vertices.length; i++) {
                 graph.addEdge(sourceIndex, keysToIndex.get(vertices[i]));
