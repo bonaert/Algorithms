@@ -5,14 +5,14 @@ import DataStructure.Stack;
 
 import java.util.Arrays;
 
-public class Dijkstra {
+public class DijkstraShortestPath {
 
     private double[] distTo;
     private int[] edgeTo;
     private IndexMinPriorityQueue<Double> indexMinPQ;
     private static final double INFINITY = Double.POSITIVE_INFINITY;
 
-    public Dijkstra(EdgeWeightedDirectedGraph graph, int source) {
+    public DijkstraShortestPath(EdgeWeightedDirectedGraph graph, int source) {
 
         checkNegativeEdges(graph);
 
