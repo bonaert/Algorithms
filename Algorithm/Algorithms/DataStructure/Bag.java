@@ -40,6 +40,23 @@ public class Bag<Item> implements Iterable<Item> {
     }
 
     /**
+     * Creates a container of objects, initialized with the
+     * given items, that can be extended without
+     * consideration. It provides an iterator values
+     * contained in this Bag.
+     */
+    public Bag(Bag bag){
+        size = 0;
+        first = null;
+        Iterator<Item> iterator = bag.iterator();
+
+        while (iterator.hasNext()) {
+            Item next = iterator.next();
+            add(next);
+        }
+    }
+
+    /**
      * Adds the item to the bag.
      *
      * @param item, the provided item.

@@ -41,6 +41,37 @@ public class Queue<Item> implements Iterable<Item> {
     }
 
     /**
+     * Provided a queue, that is, an ordered object,
+     * initialized with the items in the provided bag.
+     * Through enqueing and dequeuing, this object
+     * provides a first-in first-out(FIFO) ordering.
+     */
+    public Queue(Queue queue) {
+        buildQueue(queue, false);
+    }
+
+    /**
+     * Since it will first add the items in the wrong direction,
+     * we must do it a second time to put the
+     * items in the correct order
+     *
+     * @param queue
+     * @param goodDirection
+     */
+    private void buildQueue(Queue queue, boolean goodDirection) {
+        size = 0;
+        first = null;
+        Iterator<Item> iterator = queue.iterator();
+
+        while (iterator.hasNext()) {
+            Item next = iterator.next();
+            enqueue(next);
+        }
+
+        if (!goodDirection) buildQueue(this, true);
+    }
+
+    /**
      * Enqueue an item to the queue.
      *
      * @param item, the item

@@ -40,6 +40,38 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     /**
+     * Provided a stack, that is, an ordered object,
+     * initialized with the provided items.
+     * Through enqueing and dequeuing, this object
+     * provides a first-in first-out(FIFO) ordering.
+     */
+    public Stack(Stack stack) {
+        buildStack(stack, false);
+    }
+
+    /**
+     * Since it will first add the items in the wrong direction,
+     * we must do it a second time to put the
+     * items in the correct order
+     *
+     * @param stack
+     * @param goodDirection
+     */
+    private void buildStack(Stack stack, boolean goodDirection) {
+        size = 0;
+        first = null;
+        Iterator<Item> iterator = stack.iterator();
+
+        while (iterator.hasNext()) {
+            Item next = iterator.next();
+            push(next);
+        }
+
+        if (!goodDirection) buildStack(this, true);
+    }
+
+
+    /**
      * Push an item onto the stack.
      *
      * @param item, the item
