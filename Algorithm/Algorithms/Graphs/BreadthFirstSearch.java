@@ -20,7 +20,7 @@ public class BreadthFirstSearch {
      * @param graph
      * @param source
      */
-    public BreadthFirstSearch(Graph graph, int source) {
+    public BreadthFirstSearch(UndirectedGraph graph, int source) {
         marked = new boolean[graph.vertices()];
         edgeTo = new int[graph.vertices()];
         distTo = new int[graph.vertices()];
@@ -39,7 +39,7 @@ public class BreadthFirstSearch {
      * @param graph
      * @param sources
      */
-    public BreadthFirstSearch(Graph graph, Iterable<Integer> sources) {
+    public BreadthFirstSearch(UndirectedGraph graph, Iterable<Integer> sources) {
         marked = new boolean[graph.vertices()];
         edgeTo = new int[graph.vertices()];
         distTo = new int[graph.vertices()];
@@ -49,7 +49,7 @@ public class BreadthFirstSearch {
         bfs(graph, sources);
     }
 
-    private void bfs(Graph graph, Iterable<Integer> sources) {
+    private void bfs(UndirectedGraph graph, Iterable<Integer> sources) {
 
         Queue<Integer> verticesToVisit = new Queue<Integer>();
 
@@ -74,7 +74,7 @@ public class BreadthFirstSearch {
 
     }
 
-    private void bfs(Graph graph, int source) {
+    private void bfs(UndirectedGraph graph, int source) {
 
         Queue<Integer> verticesToVisit = new Queue<Integer>();
         verticesToVisit.enqueue(source);
