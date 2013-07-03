@@ -36,8 +36,8 @@ public class DijkstraShortestPath {
     private void relax(DirectedEdge edge) {
         int from = edge.source();
         int to = edge.dest();
-        if (distTo[to] > edge.wheight() + distTo[from]) {
-            distTo[to] = edge.wheight() + distTo[from];
+        if (distTo[to] > edge.weight() + distTo[from]) {
+            distTo[to] = edge.weight() + distTo[from];
             edgeTo[to] = from;
             if (indexMinPQ.contains(to)) indexMinPQ.decreaseKey(to, distTo[to]);
             else indexMinPQ.insert(to, distTo[to]);
@@ -46,7 +46,7 @@ public class DijkstraShortestPath {
 
     private void checkNegativeEdges(EdgeWeightedDirectedGraph graph) {
         for (DirectedEdge edge : graph.edgesIterator()) {
-            if (edge.wheight() < 0) throw new IllegalArgumentException("Negative edges!");
+            if (edge.weight() < 0) throw new IllegalArgumentException("Negative edges!");
         }
     }
 

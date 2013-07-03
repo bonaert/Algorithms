@@ -118,7 +118,7 @@ public class EdgeWeightedDirectedGraph implements WheightedGraph {
 
         for (int source = 0; source < vertices; source++) {
             for (DirectedEdge edge : adjEdges(source)) {
-                reverseGraph.addEdge(edge.dest(), source, edge.wheight());
+                reverseGraph.addEdge(edge.dest(), source, edge.weight());
             }
         }
 

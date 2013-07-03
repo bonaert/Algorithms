@@ -1,13 +1,13 @@
 package Graphs;
 
-public class DirectedEdge implements Edge {
+public class DirectedEdge implements Edge, Comparable<DirectedEdge> {
     private int source, dest;
-    private double wheight;
+    private double weight;
 
-    public DirectedEdge(int source, int dest, double wheight) {
+    public DirectedEdge(int source, int dest, double weight) {
         this.source = source;
         this.dest = dest;
-        this.wheight = wheight;
+        this.weight = weight;
     }
 
     /**
@@ -19,17 +19,13 @@ public class DirectedEdge implements Edge {
 
     /**
      * Return the destination of this edge.
-     *
-     * @return
      */
     public int dest() {
         return dest;
     }
 
     /**
-     * Returns an vertex of this edge.
-     *
-     * @return
+     * Returns a vertex of this edge.
      */
     public int either() {
         return source;
@@ -45,9 +41,22 @@ public class DirectedEdge implements Edge {
     }
 
     /**
-     * Returns the wheight of this edge.
+     * Returns the weight of this edge.
      */
-    public double wheight() {
-        return wheight;
+    public double weight() {
+        return weight;
     }
+
+    /**
+     * Return -1 if this edge has a greater weight than
+     * the other edge, 0 if both weights are equals and
+     * 1 otherwise.
+     *
+     * @param otherEdge, the other edge
+     */
+    public int compareTo(DirectedEdge otherEdge) {
+        double otherWeight = otherEdge.weight;
+        return (weight > otherWeight) ? 1 : (weight < otherWeight ? -1 : 0);
+    }
+
 }

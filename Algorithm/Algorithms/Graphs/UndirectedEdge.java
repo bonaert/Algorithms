@@ -1,6 +1,6 @@
 package Graphs;
 
-public class UndirectedEdge implements Edge {
+public class UndirectedEdge implements Edge, Comparable<UndirectedEdge> {
 
     private int vertexA, vertexB;
     private double wheight;
@@ -36,10 +36,22 @@ public class UndirectedEdge implements Edge {
     }
 
     /**
-     * Returns the wheight of this edge.
+     * Returns the weight of this edge.
      */
-    public double wheight() {
+    public double weight() {
         return wheight;
+    }
+
+    /**
+     * Return -1 if this edge has a greater weight than
+     * the other edge, 0 if both weights are equals and
+     * 1 otherwise.
+     *
+     * @param otherEdge, the other edge
+     */
+    public int compareTo(UndirectedEdge otherEdge) {
+        double otherWeight = otherEdge.wheight;
+        return (wheight > otherWeight) ? 1 : (wheight < otherWeight ? -1 : 0);
     }
 
 

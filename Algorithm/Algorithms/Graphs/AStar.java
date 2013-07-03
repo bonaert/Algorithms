@@ -53,7 +53,7 @@ public class AStar {
             for (DirectedEdge neighborEdge : graph.adjEdges(current)) {
 
                 int neighbor = neighborEdge.dest();
-                double score = distTo[current] + neighborEdge.wheight();
+                double score = distTo[current] + neighborEdge.weight();
 
                 if (visitedNodes.contains(neighbor) && score >= distTo[neighbor]) {
                     continue;
