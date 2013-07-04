@@ -20,7 +20,7 @@ public class DirectedGraph implements Graph {
         edges = 0;
     }
 
-    public DirectedGraph(DirectedGraph graph){
+    public DirectedGraph(DirectedGraph graph) {
 
         edges = graph.edges;
         vertices = graph.vertices;

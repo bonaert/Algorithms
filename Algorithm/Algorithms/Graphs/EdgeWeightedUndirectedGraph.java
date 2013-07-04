@@ -78,4 +78,19 @@ public class EdgeWeightedUndirectedGraph implements WheightedGraph {
     public int vertices() {
         return vertices;
     }
+
+    /**
+     * Returns all the edges in this graph.
+     */
+    public Iterable<UndirectedEdge> edgesIterator() {
+        Bag<UndirectedEdge> edges = new Bag<UndirectedEdge>();
+
+        for (Bag<UndirectedEdge> edgeBag : adj) {
+            for (UndirectedEdge edge : edgeBag) {
+                edges.add(edge);
+            }
+        }
+
+        return edges;
+    }
 }

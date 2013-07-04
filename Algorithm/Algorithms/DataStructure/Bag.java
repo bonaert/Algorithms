@@ -45,7 +45,7 @@ public class Bag<Item> implements Iterable<Item> {
      * consideration. It provides an iterator values
      * contained in this Bag.
      */
-    public Bag(Bag bag){
+    public Bag(Bag bag) {
         size = 0;
         first = null;
         Iterator<Item> iterator = bag.iterator();
