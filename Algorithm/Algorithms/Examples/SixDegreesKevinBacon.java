@@ -5,6 +5,8 @@ import Graphs.BreadthFirstSearch;
 import Graphs.SymbolGraph;
 import Graphs.UndirectedGraph;
 
+import java.util.HashMap;
+
 public class SixDegreesKevinBacon {
 
     private BreadthFirstSearch breadthFirstSearch;
@@ -22,6 +24,8 @@ public class SixDegreesKevinBacon {
 
         BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(tempGraph, graph.index(source));
 
+
+        HashMap m = new HashMap();
     }
 
 
