@@ -10,6 +10,8 @@ public class TopologicalOrder {
         if (!cycle.hasCycle()) {
             DepthFirstSearchOrder dfsOrder = new DepthFirstSearchOrder(graph);
             this.order = dfsOrder.reversePostOrderIterator();
+        } else {
+            throw new IllegalArgumentException("This graph has a cycle!");
         }
     }
 
@@ -19,6 +21,8 @@ public class TopologicalOrder {
         if (!cycle.hasCycle()) {
             DepthFirstSearchOrder dfsOrder = new DepthFirstSearchOrder(graph);
             this.order = dfsOrder.reversePostOrderIterator();
+        } else {
+            throw new IllegalArgumentException("This graph has a cycle!");
         }
     }
 

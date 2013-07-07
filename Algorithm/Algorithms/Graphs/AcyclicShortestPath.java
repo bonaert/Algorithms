@@ -88,4 +88,21 @@ public class AcyclicShortestPath {
         return edges;
     }
 
+    public static void main(String[] args) {
+        EdgeWeightedDirectedGraph graph = new EdgeWeightedDirectedGraph(6);
+        graph.addEdge(0, 1, 2);
+        graph.addEdge(1, 2, 2);
+        graph.addEdge(2, 3, 2);
+        graph.addEdge(3, 4, 2);
+        graph.addEdge(0, 5, 10);
+        graph.addEdge(4, 5, 5);
+
+        AcyclicShortestPath path = new AcyclicShortestPath(graph, 0);
+        for (Integer vertex : path.pathTo(5)) {
+            System.out.print(vertex + " -> ");
+        }
+
+
+    }
+
 }
