@@ -59,4 +59,11 @@ public class DirectedEdge implements Edge, Comparable<DirectedEdge> {
         return (weight > otherWeight) ? 1 : (weight < otherWeight ? -1 : 0);
     }
 
+    /**
+     * String representation of the directed edge.
+     */
+    public String toString() {
+        return source + " -> " + dest;
+    }
+
 }
