@@ -17,7 +17,7 @@ public class SixDegreesKevinBacon {
         graph = new SymbolGraph(pathToFile, delimiter);
 
         if (!graph.contains(source)) {
-            throw new Error("The source is not in the list.");
+            throw new Error("The from is not in the list.");
         }
 
         UndirectedGraph tempGraph = graph.graph();

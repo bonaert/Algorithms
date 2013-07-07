@@ -18,6 +18,9 @@ public class EdgeWeightedUndirectedGraph implements WheightedGraph {
         vertices = numberVertices;
         adj = (Bag<UndirectedEdge>[]) new Bag[numberVertices];
         edges = 0;
+        for (int i = 0; i < numberVertices; i++) {
+            adj[i] = new Bag<UndirectedEdge>();
+        }
     }
 
     /**

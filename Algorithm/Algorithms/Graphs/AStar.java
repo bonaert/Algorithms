@@ -52,7 +52,7 @@ public class AStar {
 
             for (DirectedEdge neighborEdge : graph.adjEdges(current)) {
 
-                int neighbor = neighborEdge.dest();
+                int neighbor = neighborEdge.to();
                 double score = distTo[current] + neighborEdge.weight();
 
                 if (visitedNodes.contains(neighbor) && score >= distTo[neighbor]) {
@@ -95,7 +95,7 @@ public class AStar {
 
         Stack<DirectedEdge> edges = new Stack<DirectedEdge>();
 
-        for (DirectedEdge edge = edgeTo[goal]; edge != null; edge = edgeTo[edge.source()]) {
+        for (DirectedEdge edge = edgeTo[goal]; edge != null; edge = edgeTo[edge.from()]) {
             edges.push(edge);
         }
 
@@ -117,7 +117,7 @@ public class AStar {
 
         AStar aStar = new AStar(graph, 0, 5);
         for (DirectedEdge directedEdge : aStar.pathToGoal()) {
-            System.out.println(directedEdge.source() + " -> " + directedEdge.dest());
+            System.out.println(directedEdge.from() + " -> " + directedEdge.to());
         }
 
         System.out.println(aStar.distToGoal());

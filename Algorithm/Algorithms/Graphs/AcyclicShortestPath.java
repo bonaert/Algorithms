@@ -38,8 +38,8 @@ public class AcyclicShortestPath {
     }
 
     private void relax(DirectedEdge edge) {
-        int from = edge.source();
-        int to = edge.dest();
+        int from = edge.from();
+        int to = edge.to();
         if (distTo[to] > edge.weight() + distTo[from]) {
             distTo[to] = edge.weight() + distTo[from];
             edgeTo[to] = from;
@@ -94,8 +94,8 @@ public class AcyclicShortestPath {
         graph.addEdge(1, 2, 2);
         graph.addEdge(2, 3, 2);
         graph.addEdge(3, 4, 2);
+        graph.addEdge(4, 5, 1);
         graph.addEdge(0, 5, 10);
-        graph.addEdge(4, 5, 5);
 
         AcyclicShortestPath path = new AcyclicShortestPath(graph, 0);
         for (Integer vertex : path.pathTo(5)) {

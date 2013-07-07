@@ -18,6 +18,9 @@ public class DirectedGraph implements Graph {
         vertices = numberVertices;
         adj = (Bag<Integer>[]) new Bag[numberVertices];
         edges = 0;
+        for (int i = 0; i < numberVertices; i++) {
+            adj[i] = new Bag<Integer>();
+        }
     }
 
     public DirectedGraph(DirectedGraph graph) {

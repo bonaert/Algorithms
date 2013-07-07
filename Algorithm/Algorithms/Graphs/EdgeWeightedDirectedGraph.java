@@ -2,8 +2,6 @@ package Graphs;
 
 import DataStructure.Bag;
 
-import java.util.Arrays;
-
 public class EdgeWeightedDirectedGraph implements WheightedGraph {
 
     private int edges;
@@ -20,7 +18,9 @@ public class EdgeWeightedDirectedGraph implements WheightedGraph {
         vertices = numberVertices;
         adj = (Bag<DirectedEdge>[]) new Bag[numberVertices];
         edges = 0;
-        Arrays.fill(adj, new Bag<DirectedEdge>());
+        for (int i = 0; i < numberVertices; i++) {
+            adj[i] = new Bag<DirectedEdge>();
+        }
     }
 
     /**
@@ -61,17 +61,17 @@ public class EdgeWeightedDirectedGraph implements WheightedGraph {
      * @param edge
      */
     public void addEdge(DirectedEdge edge) {
-        check(edge.source());
-        check(edge.dest());
+        check(edge.from());
+        check(edge.to());
 
-        adj[edge.source()].add(edge);
+        adj[edge.from()].add(edge);
 
         edges++;
     }
 
 
     /**
-     * Returns the wheighted edges immediately reachable from the vertex, that is,
+     * Returns the weighted edges immediately reachable from the vertex, that is,
      * the edges that have a directed edge from the vertex.
      */
     public Iterable<DirectedEdge> adjEdges(int vertex) {
@@ -118,7 +118,7 @@ public class EdgeWeightedDirectedGraph implements WheightedGraph {
 
         for (int source = 0; source < vertices; source++) {
             for (DirectedEdge edge : adjEdges(source)) {
-                reverseGraph.addEdge(edge.dest(), source, edge.weight());
+                reverseGraph.addEdge(edge.to(), source, edge.weight());
             }
         }
 

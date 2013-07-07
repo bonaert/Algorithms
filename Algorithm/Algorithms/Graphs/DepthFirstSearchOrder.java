@@ -69,8 +69,8 @@ public class DepthFirstSearchOrder {
         preOrder.enqueue(source);
 
         for (DirectedEdge neighborEdge : graph.adjEdges(source)) {
-            if (!marked[neighborEdge.dest()]) {
-                depthFirstSearch(graph, neighborEdge.dest());
+            if (!marked[neighborEdge.to()]) {
+                depthFirstSearch(graph, neighborEdge.to());
             }
         }
 

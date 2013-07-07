@@ -95,7 +95,7 @@ public class Bag<Item> implements Iterable<Item> {
         private Node current = first;
 
         public boolean hasNext() {
-            return current.next != null;
+            return current != null;
         }
 
         public void remove() {

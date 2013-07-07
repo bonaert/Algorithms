@@ -17,6 +17,9 @@ public class UndirectedGraph {
         vertices = numberVertices;
         edges = 0;
         adj = (Bag<Integer>[]) new Bag[numberVertices];
+        for (int i = 0; i < numberVertices; i++) {
+            adj[i] = new Bag<Integer>();
+        }
     }
 
     /**

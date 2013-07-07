@@ -1,42 +1,42 @@
 package Graphs;
 
 public class DirectedEdge implements Edge, Comparable<DirectedEdge> {
-    private int source, dest;
+    private int from, to;
     private double weight;
 
-    public DirectedEdge(int source, int dest, double weight) {
-        this.source = source;
-        this.dest = dest;
+    public DirectedEdge(int from, int to, double weight) {
+        this.from = from;
+        this.to = to;
         this.weight = weight;
     }
 
     /**
      * Return the source of this edge.
      */
-    public int source() {
-        return source;
+    public int from() {
+        return from;
     }
 
     /**
      * Return the destination of this edge.
      */
-    public int dest() {
-        return dest;
+    public int to() {
+        return to;
     }
 
     /**
      * Returns a vertex of this edge.
      */
     public int either() {
-        return source;
+        return from;
     }
 
     /**
      * Return the other vertex of this edge.
      */
     public int other(int vertex) {
-        if (vertex == source) return dest;
-        if (vertex == dest) return source;
+        if (vertex == from) return to;
+        if (vertex == to) return from;
         throw new IllegalArgumentException();
     }
 
@@ -63,7 +63,7 @@ public class DirectedEdge implements Edge, Comparable<DirectedEdge> {
      * String representation of the directed edge.
      */
     public String toString() {
-        return source + " -> " + dest;
+        return from + " -> " + to;
     }
 
 }

@@ -46,8 +46,8 @@ public class BellmanFordShortestPath {
     }
 
     private void relax(DirectedEdge edge) {
-        int from = edge.source();
-        int to = edge.dest();
+        int from = edge.from();
+        int to = edge.to();
         if (distTo[to] > edge.weight() + distTo[from]) {
 
             distTo[to] = edge.weight() + distTo[from];
