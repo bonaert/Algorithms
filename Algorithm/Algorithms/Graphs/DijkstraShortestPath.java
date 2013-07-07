@@ -12,6 +12,17 @@ public class DijkstraShortestPath {
     private IndexMinPriorityQueue<Double> indexMinPQ;
     private static final double INFINITY = Double.POSITIVE_INFINITY;
 
+    /**
+     * Uses Dijkstra's Algorithm to find the shortest
+     * path from a source to every reachable vertex
+     * in a edge weighted directed graph.
+     * <p/>
+     * If the graph contains edges with a negative weight,
+     * an IllegalArgumentException is thrown.
+     *
+     * @param graph
+     * @param source
+     */
     public DijkstraShortestPath(EdgeWeightedDirectedGraph graph, int source) {
 
         checkNegativeEdges(graph);
@@ -50,21 +61,41 @@ public class DijkstraShortestPath {
         }
     }
 
+    /**
+     * Returns true if there is a path from the source
+     * to the vertex. Otherwise, returns false.
+     *
+     * @param vertex
+     */
     public boolean hasPathTo(int vertex) {
         return distTo[vertex] < INFINITY;
     }
 
+    /**
+     * Returns the distance from the source to
+     * the given vertex. If the vertex is
+     * unreachable, the distance returned is
+     * Double.POSITIVE_INFINITY.
+     *
+     * @param vertex
+     */
     public double distTo(int vertex) {
         return distTo[vertex];
     }
 
+    /**
+     * Returns the edges from the source to the given vertex,
+     * is such a path exists. Otherwise, it returns null.
+     *
+     * @param vertex
+     */
     public Iterable<Integer> pathTo(int vertex) {
         if (!hasPathTo(vertex)) return null;
 
         Stack<Integer> edges = new Stack<Integer>();
 
         int node;
-        for (node = vertex; distTo[node] != node; node = edgeTo[node]) {
+        for (node = vertex; distTo[node] != 0; node = edgeTo[node]) {
             edges.push(node);
         }
 
