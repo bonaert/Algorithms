@@ -121,7 +121,7 @@ public class HashSet<Key> {
     }
 
     private int computeHash(Key key) {
-        return key.hashCode() % capacity;
+        return (key.hashCode() & 0x7FFFFFF) % capacity;
     }
 
     private boolean isEntry(int hash) {
