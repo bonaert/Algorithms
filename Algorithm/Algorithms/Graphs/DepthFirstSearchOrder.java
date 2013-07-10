@@ -37,7 +37,7 @@ public class DepthFirstSearchOrder {
         postOrder = new Queue<Integer>();
 
         for (int i = 0; i < graph.vertices(); i++) {
-            depthFirstSearch(graph, i);
+            if (!marked[i]) depthFirstSearch(graph, i);
         }
     }
 
