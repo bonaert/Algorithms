@@ -36,7 +36,7 @@ public class QuickSort {
 
         int storeIndex = low;
 
-        for (int i = low + 1; i < high; i++) {
+        for (int i = low; i < high; i++) {
             if (pivot > a[i]) {
                 swap(a, i, storeIndex++);
             }
@@ -73,7 +73,7 @@ public class QuickSort {
 
         int storeIndex = low;
 
-        for (int i = low + 1; i < high; i++) {
+        for (int i = low; i < high; i++) {
             if (pivot.compareTo(a[i]) > 0) {
                 swap(a, i, storeIndex++);
             }
@@ -90,14 +90,14 @@ public class QuickSort {
 
     private static void swap(int[] a, int index1, int index2) {
         int temp = a[index1];
-        a[index2] = a[index1];
-        a[index1] = temp;
+        a[index1] = a[index2];
+        a[index2] = temp;
     }
 
     private static void swap(Comparable[] a, int index1, int index2) {
         Comparable temp = a[index1];
-        a[index2] = a[index1];
-        a[index1] = temp;
+        a[index1] = a[index2];
+        a[index2] = temp;
     }
 
     public static void printArray(int[] a) {
