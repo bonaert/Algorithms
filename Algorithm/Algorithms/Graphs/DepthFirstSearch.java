@@ -3,7 +3,6 @@ package Graphs;
 import DataStructure.Stack;
 
 public class DepthFirstSearch {
-    private static final int INFINITY = Integer.MAX_VALUE;
     private boolean[] marked;
     private int[] edgeTo;
     private int source;
@@ -20,16 +19,19 @@ public class DepthFirstSearch {
         marked = new boolean[graph.vertices()];
         edgeTo = new int[graph.vertices()];
 
-        bfs(graph, source);
+        this.source = source;
+
+        dfs(graph, source);
     }
 
-    private void bfs(Graph graph, int source) {
+    private void dfs(Graph graph, int source) {
 
         Stack<Integer> verticesToVisit = new Stack<Integer>();
         verticesToVisit.push(source);
 
         while (!verticesToVisit.isEmpty()) {
             int currentVertex = verticesToVisit.pop();
+            marked[currentVertex] = true;
 
             for (Integer adjVertex : graph.adj(currentVertex)) {
 
