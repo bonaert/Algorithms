@@ -14,7 +14,7 @@ public class QuickSelect {
      * the order of the elements. If this is crucial, pass an
      * copy of your array. If you use this method an big amount
      * of times, sorting and then simply choosing will be more
-     * efficient, if memory is not a problem.
+     * efficient.
      *
      * @param numbers
      * @param index
@@ -79,26 +79,9 @@ public class QuickSelect {
     /**
      * Helper methods
      */
-
-
     private static int getRandomIndex(int low, int high) {
         return random.nextInt(high - low + 1) + low;
     }
 
-    private static void swap(int[] a, int index1, int index2) {
-        int temp = a[index1];
-        a[index1] = a[index2];
-        a[index2] = temp;
-    }
-
-    private static void swap(Comparable[] a, int index1, int index2) {
-        Comparable temp = a[index1];
-        a[index1] = a[index2];
-        a[index2] = temp;
-    }
-
-    private static boolean greater(Comparable comp1, Comparable comp2) {
-        return comp1.compareTo(comp2) > 0;
-    }
 
 }

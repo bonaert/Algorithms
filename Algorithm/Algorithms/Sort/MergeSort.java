@@ -11,11 +11,17 @@ public class MergeSort {
     private MergeSort() {
     }
 
+    /**
+     * Sorts the entire array of integers.
+     */
     public static void sort(int[] a) {
         int[] aux = new int[a.length];
         sort(a, aux, 0, a.length - 1);
     }
 
+    /**
+     * Sorts the entire array of comparable objects.
+     */
     public static void sort(Comparable[] a) {
         Comparable[] aux = new Comparable[a.length];
         sort(a, aux, 0, a.length - 1);

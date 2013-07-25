@@ -9,16 +9,27 @@ public class QuickSort {
     private static final Random random = new Random();
     private static final int INSERTION_THRESHOLD = 47;
 
-    private QuickSort(){
+    private QuickSort() {
 
     }
 
 
+    /**
+     * Sorts the entire array of integers.
+     */
     public static void sort(int[] a) {
         sort(a, 0, a.length - 1);
     }
 
-    private static void sort(int[] a, int low, int high) {
+    /**
+     * Sorts the array of integers from the low index to
+     * the high one (both included).
+     *
+     * @param a
+     * @param low
+     * @param high
+     */
+    public static void sort(int[] a, int low, int high) {
 
         if (high - low < INSERTION_THRESHOLD) {
             Insertion.sort(a, low, high);
@@ -34,6 +45,16 @@ public class QuickSort {
 
     }
 
+    /**
+     * Partitions the array from the low index to high
+     * index (both included) around the pivot at the
+     * given pivot index.
+     *
+     * @param a
+     * @param low
+     * @param high
+     * @param pivotIndex
+     */
     public static int partition(int[] a, int low, int high, int pivotIndex) {
 
         int pivot = a[pivotIndex];
@@ -51,13 +72,22 @@ public class QuickSort {
         return storeIndex;
     }
 
-
-
+    /**
+     * Sorts the entire array of comparable objects.
+     */
     public static void sort(Comparable[] a) {
         sort(a, 0, a.length - 1);
     }
 
-    private static void sort(Comparable[] a, int low, int high) {
+    /**
+     * Sorts the array of comparable objects from the low index to
+     * the high one (both included).
+     *
+     * @param a
+     * @param low
+     * @param high
+     */
+    public static void sort(Comparable[] a, int low, int high) {
 
         if (high - low < INSERTION_THRESHOLD) {
             Insertion.sort(a, low, high);
@@ -73,6 +103,16 @@ public class QuickSort {
 
     }
 
+    /**
+     * Partitions the array from the low index to high
+     * index (both included) around the pivot at the
+     * given pivot index.
+     *
+     * @param a
+     * @param low
+     * @param high
+     * @param pivotIndex
+     */
     public static int partition(Comparable[] a, int low, int high, int pivotIndex) {
 
         Comparable pivot = a[pivotIndex];
