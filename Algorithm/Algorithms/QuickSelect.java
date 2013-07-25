@@ -1,4 +1,5 @@
 import java.util.Random;
+import Sort.QuickSort;
 
 public class QuickSelect {
 
@@ -28,7 +29,7 @@ public class QuickSelect {
 
         int pivotIndex = getRandomIndex(low, high);
 
-        int pivotPosition = partition(numbers, low, high, pivotIndex);
+        int pivotPosition = QuickSort.partition(numbers, low, high, pivotIndex);
 
         if (pivotPosition == index) return numbers[index];
 
@@ -40,22 +41,6 @@ public class QuickSelect {
 
     }
 
-    private static int partition(int[] a, int low, int high, int pivotIndex) {
-
-        int pivot = a[pivotIndex];
-        swap(a, pivotIndex, high);
-
-        int storeIndex = low;
-
-        for (int i = low; i < high; i++) {
-            if (pivot > a[i]) {
-                swap(a, i, storeIndex++);
-            }
-        }
-
-        swap(a, storeIndex, high);
-        return storeIndex;
-    }
 
     /**
      * Given an array of comparable objects, find the ith smallest
@@ -78,7 +63,7 @@ public class QuickSelect {
 
         int pivotIndex = getRandomIndex(low, high);
 
-        int pivotPosition = partition(array, low, high, pivotIndex);
+        int pivotPosition = QuickSort.partition(array, low, high, pivotIndex);
 
         if (pivotPosition == index) return array[index];
 
@@ -88,23 +73,6 @@ public class QuickSelect {
             return select(array, pivotPosition + 1, high, index);
         }
 
-    }
-
-    private static int partition(Comparable[] a, int low, int high, int pivotIndex) {
-
-        Comparable pivot = a[pivotIndex];
-        swap(a, pivotIndex, high);
-
-        int storeIndex = low;
-
-        for (int i = low; i < high; i++) {
-            if (greater(pivot, a[i])) {
-                swap(a, i, storeIndex++);
-            }
-        }
-
-        swap(a, storeIndex, high);
-        return storeIndex;
     }
 
 
