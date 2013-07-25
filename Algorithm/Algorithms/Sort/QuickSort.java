@@ -9,6 +9,11 @@ public class QuickSort {
     private static final Random random = new Random();
     private static final int INSERTION_THRESHOLD = 47;
 
+    private QuickSort(){
+
+    }
+
+
     public static void sort(int[] a) {
         sort(a, 0, a.length - 1);
     }
@@ -29,7 +34,7 @@ public class QuickSort {
 
     }
 
-    private static int partition(int[] a, int low, int high, int pivotIndex) {
+    public static int partition(int[] a, int low, int high, int pivotIndex) {
 
         int pivot = a[pivotIndex];
         swap(a, pivotIndex, high);
@@ -45,6 +50,8 @@ public class QuickSort {
         swap(a, storeIndex, high);
         return storeIndex;
     }
+
+
 
     public static void sort(Comparable[] a) {
         sort(a, 0, a.length - 1);
@@ -66,7 +73,7 @@ public class QuickSort {
 
     }
 
-    private static int partition(Comparable[] a, int low, int high, int pivotIndex) {
+    public static int partition(Comparable[] a, int low, int high, int pivotIndex) {
 
         Comparable pivot = a[pivotIndex];
         swap(a, pivotIndex, high);
