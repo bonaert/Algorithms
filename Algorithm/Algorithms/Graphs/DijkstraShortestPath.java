@@ -30,11 +30,11 @@ public class DijkstraShortestPath {
         distTo = new double[graph.vertices()];
         edgeTo = new int[graph.vertices()];
 
+        Arrays.fill(distTo, INFINITY);
         distTo[source] = 0;
 
-        Arrays.fill(distTo, INFINITY);
-
         indexMinPQ = new IndexMinPriorityQueue<Double>(graph.edges());
+        indexMinPQ.insert(source, 0.);
 
         while (!indexMinPQ.isEmpty()) {
             int vertex = indexMinPQ.deleteMin();
