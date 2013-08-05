@@ -4,6 +4,7 @@ import DataStructure.IndexMinPriorityQueue;
 import DataStructure.Stack;
 
 import java.util.Arrays;
+import java.util.TreeMap;
 
 public class DijkstraShortestPath {
 
@@ -33,7 +34,7 @@ public class DijkstraShortestPath {
         Arrays.fill(distTo, INFINITY);
         distTo[source] = 0;
 
-        indexMinPQ = new IndexMinPriorityQueue<Double>(graph.edges());
+        indexMinPQ = new IndexMinPriorityQueue<Double>(graph.vertices());
         indexMinPQ.insert(source, 0.);
 
         while (!indexMinPQ.isEmpty()) {
