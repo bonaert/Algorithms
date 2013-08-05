@@ -28,8 +28,9 @@ public class Insertion {
     }
 
     /**
-     * Sorts the provided array of integers through
-     * the insertion sort algorithm.
+     * Sorts the provided array of integers from the low
+     * index to the high index, using the insertion
+     * sort algorithm.
      * Note: This sort is O(n^2), so only use it
      * for nearly sorted or small arrays.
      *
