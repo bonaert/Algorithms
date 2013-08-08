@@ -55,11 +55,13 @@ public class BreadthFirstSearch {
 
         for (Integer source : sources) {
             distTo[source] = 0;
+            marked[source] = true;
             verticesToVisit.enqueue(source);
         }
 
         while (!verticesToVisit.isEmpty()) {
             int currentVertex = verticesToVisit.dequeue();
+            marked[currentVertex] = true;
 
             for (Integer adjVertex : graph.adj(currentVertex)) {
 
@@ -82,6 +84,7 @@ public class BreadthFirstSearch {
 
         while (!verticesToVisit.isEmpty()) {
             int currentVertex = verticesToVisit.dequeue();
+            marked[currentVertex] = true;
 
             for (Integer adjVertex : graph.adj(currentVertex)) {
 
@@ -132,7 +135,7 @@ public class BreadthFirstSearch {
         Stack<Integer> path = new Stack<Integer>();
 
         int current;
-        for (current = vertex; distTo[current] != 0; current = edgeTo[vertex]) {
+        for (current = vertex; distTo[current] > 0; current = edgeTo[current]) {
             path.push(current);
         }
 

@@ -69,7 +69,7 @@ public class DepthFirstSearch {
 
         Stack<Integer> path = new Stack<Integer>();
 
-        for (int current = vertex; current != source; current = edgeTo[vertex]) {
+        for (int current = vertex; current != source; current = edgeTo[current]) {
             path.push(current);
         }
 
