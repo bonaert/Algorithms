@@ -157,11 +157,11 @@ public class MinimumPriorityQueue<Key> implements Iterable<Key> {
 
     private class HeapIterator implements Iterator<Key> {
 
-        private MaximumPriorityQueue<Key> copy;
+        private MinimumPriorityQueue<Key> copy;
 
         public HeapIterator() {
-            if (comparator == null) copy = new MaximumPriorityQueue(size);
-            else copy = new MaximumPriorityQueue(size, comparator);
+            if (comparator == null) copy = new MinimumPriorityQueue(size);
+            else copy = new MinimumPriorityQueue(size, comparator);
 
             for (int i = 1; i <= size; i++) {
                 copy.insert(priorityQueue[i]);
@@ -179,7 +179,7 @@ public class MinimumPriorityQueue<Key> implements Iterable<Key> {
 
         public Key next() {
             if (!hasNext()) throw new NoSuchElementException();
-            return copy.deleteMax();
+            return copy.deleteMin();
         }
 
     }
