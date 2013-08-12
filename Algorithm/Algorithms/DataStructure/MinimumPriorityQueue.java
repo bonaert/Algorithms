@@ -73,7 +73,7 @@ public class MinimumPriorityQueue<Key> implements Iterable<Key> {
     /**
      * Deletes the minimum key and returns it.
      */
-    public Key deleteMin() {
+    public Key deleteMin() throws NoSuchElementException {
 
         if (isEmpty()) throw new NoSuchElementException("Empty priority queue.");
 
@@ -91,7 +91,9 @@ public class MinimumPriorityQueue<Key> implements Iterable<Key> {
     /**
      * Returns the minimum key
      */
-    public Key min() {
+    public Key min() throws NoSuchElementException {
+
+        if (isEmpty()) throw new NoSuchElementException("Empty priority queue.");
         return priorityQueue[1];
     }
 

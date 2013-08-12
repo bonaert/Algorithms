@@ -73,7 +73,7 @@ public class MaximumPriorityQueue<Key> implements Iterable<Key> {
     /**
      * Deletes the maximum key and returns it.
      */
-    public Key deleteMax() {
+    public Key deleteMax() throws NoSuchElementException {
 
         if (isEmpty()) throw new NoSuchElementException("Empty priority queue.");
 
@@ -91,7 +91,10 @@ public class MaximumPriorityQueue<Key> implements Iterable<Key> {
     /**
      * Returns the maximum key
      */
-    public Key max() {
+    public Key max() throws NoSuchElementException{
+
+        if (isEmpty()) throw new NoSuchElementException("Empty priority queue.");
+
         return priorityQueue[1];
     }
 
