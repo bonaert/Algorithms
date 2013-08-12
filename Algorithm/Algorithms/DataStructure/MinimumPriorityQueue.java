@@ -10,29 +10,58 @@ public class MinimumPriorityQueue<Key> implements Iterable<Key> {
     private int size;
     private Comparator comparator;
 
+    /**
+     * Build a minimum priority queue, in which finding the
+     * minimum key and deleting it are O(1).
+     *
+     * @param capacity
+     */
     public MinimumPriorityQueue(int capacity) {
         priorityQueue = (Key[]) new Object[capacity + 1];
         size = 0;
     }
 
+    /**
+     * Build a minimum priority queue, in which finding the
+     * minimum key and deleting it are O(1).
+     */
     public MinimumPriorityQueue() {
         this(1);
     }
 
+    /**
+     * Build a minimum priority queue, in which finding the
+     * minimum key and deleting it are O(1).
+     *
+     * @param capacity
+     * @param c
+     */
     public MinimumPriorityQueue(int capacity, Comparator c) {
         priorityQueue = (Key[]) new Object[capacity + 1];
         size = 0;
         comparator = c;
     }
 
+    /**
+     * Returns true if the priority queue is empty and
+     * false otherwise.
+     */
     public boolean isEmpty() {
         return (size == 0);
     }
 
+    /**
+     * Returns the size of the priority queue.
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Inserts the given key in the priority queue.
+     *
+     * @param key
+     */
     public void insert(Key key) {
         if (size >= priorityQueue.length - 1) resize(priorityQueue.length * 2);
 
@@ -41,6 +70,9 @@ public class MinimumPriorityQueue<Key> implements Iterable<Key> {
         swim(size);
     }
 
+    /**
+     * Deletes the minimum key and returns it.
+     */
     public Key deleteMin() {
 
         if (isEmpty()) throw new NoSuchElementException("Empty priority queue.");
@@ -56,6 +88,9 @@ public class MinimumPriorityQueue<Key> implements Iterable<Key> {
         return key;
     }
 
+    /**
+     * Returns the minimum key
+     */
     public Key min() {
         return priorityQueue[1];
     }
@@ -108,8 +143,13 @@ public class MinimumPriorityQueue<Key> implements Iterable<Key> {
         priorityQueue[rank2] = key;
     }
 
-    // Iterator
 
+    /**
+     * Returns an iterator over the keys in the priority queue,
+     * in increasing order.
+     *
+     * @return
+     */
     public Iterator<Key> iterator() {
         return new HeapIterator();
     }
