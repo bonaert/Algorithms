@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 public class Stack<Item> implements Iterable<Item> {
 
     private Node first;
-    private Node last;
     private int size;
 
     private class Node {
@@ -31,7 +30,6 @@ public class Stack<Item> implements Iterable<Item> {
      * provides a first-in first-out(FIFO) ordering.
      */
     public Stack(Iterable<Item> items) {
-
         size = 0;
         first = null;
         for (Item item : items) {
@@ -81,8 +79,7 @@ public class Stack<Item> implements Iterable<Item> {
         first = new Node();
         first.item = item;
         first.next = oldfirst;
-        if (isEmpty()) last = first;
-        else first.next = oldfirst;
+        if (!isEmpty()) first.next = oldfirst;
         size++;
     }
 
@@ -98,7 +95,6 @@ public class Stack<Item> implements Iterable<Item> {
         Item item = first.item;
         first = first.next;
         size--;
-        if (isEmpty()) last = null;
         return item;
     }
 
