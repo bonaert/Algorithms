@@ -9,7 +9,7 @@ public class HeapSort {
     public static void sort(int[] a) {
         MinimumPriorityQueue minimumPriorityQueue = new MinimumPriorityQueue(a.length);
         for (int i : a) {
-            minimumPriorityQueue.insert(a);
+            minimumPriorityQueue.insert(i);
         }
 
         Iterator<Integer> it = minimumPriorityQueue.iterator();
@@ -23,7 +23,7 @@ public class HeapSort {
     public static void sort(Comparable[] a) {
         MinimumPriorityQueue minimumPriorityQueue = new MinimumPriorityQueue(a.length);
         for (Comparable i : a) {
-            minimumPriorityQueue.insert(a);
+            minimumPriorityQueue.insert(i);
         }
 
         Iterator<Integer> it = minimumPriorityQueue.iterator();
