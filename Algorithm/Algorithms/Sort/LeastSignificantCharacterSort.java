@@ -1,8 +1,8 @@
 package Sort;
 
-public class LeastSignificantDigitSort {
+public class LeastSignificantCharacterSort {
 
-    private LeastSignificantDigitSort() {
+    private LeastSignificantCharacterSort() {
     }
 
     /**
