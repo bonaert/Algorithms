@@ -57,7 +57,10 @@ public class HashMapTest {
         hashMap.put(0, 3);
 
         assertIsNotEmpty();
-        assertSizeIsEqualTo(4);
+        assertSizeIsEqualTo(2);
+
+        assertKeyValuePairIs(1, 7);
+        assertKeyValuePairIs(0, 3);
     }
 
     @Test

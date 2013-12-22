@@ -39,7 +39,7 @@ public class HashMap<Key, Value> {
         }
 
         public boolean hasKey(Key key) {
-            return key.equals(this.key);
+            return (key == this.key) || (key != null && key.equals(this.key));
         }
 
         public boolean hasValue(Value value) {
@@ -117,6 +117,8 @@ public class HashMap<Key, Value> {
      * @param key
      */
     public Value get(Key key) {
+        if (key == null) throw new IllegalArgumentException("Null keys are not allowed.");
+
         int hash = computeHash(key);
         Entry<Key, Value> entry = entries[hash];
 
@@ -130,25 +132,58 @@ public class HashMap<Key, Value> {
 
     /**
      * Puts the given key and value in the hash map.
+     * Returns the value associated with the key. If the key has no
+     * associated value, null is returned.
      *
      * @param key
      * @param value
      */
-    public void put(Key key, Value value) {
+    public Value put(Key key, Value value) {
+        int oldSize = size;
+        if (key == null) throw new IllegalArgumentException("Illegal keys are not allowed");
+
         if (size >= capacity * loadFactor) resize(2 * capacity);
 
-        int hash = computeHash(key);
-        addEntry(key, value, hash);
+        Value currentValue = updateKeyValuePair(key, value);
+
+        if (currentValue == null) {
+            int hash = computeHash(key);
+            addEntry(key, value, hash);
+        }
+
+        System.out.println("Key: " + key + "   Value: " + value);
+        System.out.println(oldSize + "  --->  " + size);
+        return currentValue;
     }
 
-    private void resize(int newSize) {
-        System.out.println("Resizing");
-        Entry<Key, Value>[] oldEntries = entries;
-        entries = new Entry[newSize];
+    private Value updateKeyValuePair(Key key, Value value) {
+        int hash = computeHash(key);
+        Entry<Key, Value> entry = entries[hash];
 
-        capacity = newSize;
+        while (entry != null) {
+            if (entry.hash == hash && entry.hasKey(key)) {
+                Value oldValue = entry.value;
+                entry.setValue(value);
+                return oldValue;
+            }
+            entry = entry.nextEntry;
+        }
+
+        return null;
+    }
+
+    private void resize(int newCapacity) {
+        System.out.println("Resizing to capacity " + newCapacity);
+        Entry<Key, Value>[] oldEntries = entries;
+        entries = new Entry[newCapacity];
+
+        capacity = newCapacity;
         size = 0;
 
+        transferEntries(oldEntries);
+    }
+
+    private void transferEntries(Entry<Key, Value>[] oldEntries) {
         for (Entry<Key, Value> oldFirstEntryInChain : oldEntries) {
             addAllEntriesWithSameHash(oldFirstEntryInChain);
         }
@@ -162,9 +197,9 @@ public class HashMap<Key, Value> {
     }
 
     private void addEntry(Entry<Key, Value> entry) {
-        int hash = entry.hash;
         Key key = entry.getKey();
         Value value = entry.getValue();
+        int hash = computeHash(key);
         addEntry(key, value, hash);
     }
 
@@ -195,34 +230,51 @@ public class HashMap<Key, Value> {
      * If the key is not present, this methods doesn't
      * do anything.
      */
-    public void remove(Key key) {
-        int hash = computeHash(key);
+    public Value remove(Key key) {
+        if (key == null) throw new IllegalArgumentException("Null keys are not allowed.");
 
-        if (!entryExists(hash)) {
-            return;
-        }
-
-        Entry<Key, Value> entry = entries[hash];
-
-        // [Good Entry] -> [A] -> ... transforms into [A] -> ...
-        if (entry.hasKey(key)) {
-            entries[hash] = entry.nextEntry;
-            size--;
-            return;
-        }
-
-        // ... -> [A] -> [Good Entry] -> [B]  transform into ... -> [A] -> [B]
-        while (!entry.isLastEntryInChain()) {
-            Entry<Key, Value> nextEntry = entry.nextEntry;
-            if (nextEntry.hasKey(key)) {
-                entry.nextEntry = (nextEntry.isLastEntryInChain()) ? null : nextEntry.nextEntry;
-                size--;
-                return;
-            }
-            entry = entry.nextEntry;
-        }
+        Entry<Key, Value> entry = removeEntry(key);
+        return (entry == null) ? null : entry.value;
     }
 
+    /**
+     * Removes and returns the entry associated with the specified key
+     * in the HashMap.  Returns null if the HashMap contains no mapping
+     * for this key.
+     */
+    private Entry<Key, Value> removeEntry(Key key) {
+        int keyHash = computeHash(key);
+        Entry<Key, Value> prev = entries[keyHash];
+        Entry<Key, Value> entry = prev;
+
+        while (entry != null) {
+            Entry<Key, Value> next = entry.nextEntry;
+
+            if (entry.hash == keyHash && entry.hasKey(key)) {
+                boolean isFirstEntry = (prev == entry);
+                if (isFirstEntry) {
+                    // [Good Entry] -> [next] -> ... transforms into [next] -> ...
+                    entries[keyHash] = next;
+                } else {
+                    // ... [prev] -> [Good Entry] -> [next]  transform into ... [prev] -> [next]
+                    prev.nextEntry = next;
+                }
+
+                size--;
+                return entry;
+            }
+
+            prev = entry;
+            entry = next;
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Clears all entries in the hash map.
+     */
     public void clear() {
         Arrays.fill(entries, null);
         size = 0;
@@ -234,7 +286,7 @@ public class HashMap<Key, Value> {
      * otherwise returns false;
      */
     public boolean containsKey(Key key) {
-        if (key == null) throw new IllegalArgumentException("Null cannot be a key!");
+        if (key == null) throw new IllegalArgumentException("Null keys are not allowed.");
 
         int hash = computeHash(key);
         if (!entryExists(hash)) return false;
