@@ -1,8 +1,7 @@
 package Graphs;
 
 import DataStructure.Queue;
-
-import java.util.Stack;
+import DataStructure.Stack;
 
 public class DepthFirstSearchOrder {
 
@@ -23,7 +22,7 @@ public class DepthFirstSearchOrder {
         postOrder = new Queue<Integer>();
 
         for (int i = 0; i < graph.vertices(); i++) {
-            depthFirstSearch(graph, i);
+            if (!marked[i]) depthFirstSearch(graph, i);
         }
 
     }

@@ -2,7 +2,7 @@ package Graphs;
 
 import DataStructure.Bag;
 
-public class UndirectedGraph {
+public class UndirectedGraph implements Graph{
 
     private final int vertices;
     private int edges;

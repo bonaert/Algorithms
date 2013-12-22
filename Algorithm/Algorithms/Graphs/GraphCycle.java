@@ -41,16 +41,8 @@ public class GraphCycle {
                 // If there is a cycle, build it
                 if (onStack[neighbor]) {
 
-                    cycle = new Stack<Integer>();
-
-                    for (int current = vertex; current != neighbor; current = edgeTo[neighbor]) {
-                        cycle.push(current);
-                    }
-                    cycle.push(neighbor);
-                    cycle.push(vertex);
-
+                    cycle = buildCycle(vertex, neighbor);
                     return;
-
 
                     // else, continue searching
                 } else if (!marked[neighbor]) {
@@ -63,6 +55,7 @@ public class GraphCycle {
             onStack[vertex] = false;
         }
     }
+
 
     public GraphCycle(DirectedGraph graph) {
 
@@ -96,13 +89,7 @@ public class GraphCycle {
                 // If there is a cycle, build it
                 if (onStack[neighbor]) {
 
-                    cycle = new Stack<Integer>();
-
-                    for (int current = vertex; current != neighbor; current = edgeTo[neighbor]) {
-                        cycle.push(current);
-                    }
-                    cycle.push(neighbor);
-                    cycle.push(vertex);
+                    buildCycle(vertex, neighbor);
 
                     return;
 
@@ -117,6 +104,18 @@ public class GraphCycle {
 
             onStack[vertex] = false;
         }
+    }
+
+    private Stack<Integer> buildCycle(int vertex, Integer neighbor) {
+        Stack<Integer> cycle = new Stack<Integer>();
+
+        for (int current = vertex; current != neighbor; current = edgeTo[neighbor]) {
+            cycle.push(current);
+        }
+        cycle.push(neighbor);
+        cycle.push(vertex);
+
+        return cycle;
     }
 
     public boolean hasCycle() {

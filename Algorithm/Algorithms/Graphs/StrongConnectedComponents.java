@@ -1,6 +1,7 @@
 package Graphs;
 
 import DataStructure.Queue;
+import DataStructure.Stack;
 
 public class StrongConnectedComponents {
 
@@ -22,30 +23,33 @@ public class StrongConnectedComponents {
 
         for (int i : dfs.reversePostOrderIterator()) {
             if (!marked[i]) {
-                breadthFirstSearch(graph, i);
+                dfs(graph, i);
                 count++;
             }
         }
     }
 
-    private void breadthFirstSearch(DirectedGraph graph, int source) {
+    private void dfs(Graph graph, int source) {
 
-        Queue<Integer> verticesToVisit = new Queue<Integer>();
-        verticesToVisit.enqueue(source);
+        Stack<Integer> verticesToVisit = new Stack<Integer>();
+        verticesToVisit.push(source);
 
         while (!verticesToVisit.isEmpty()) {
-            int vertex = verticesToVisit.dequeue();
-            if (!marked[vertex]) {
+            int currentVertex = verticesToVisit.pop();
 
-                for (Integer neighbor : graph.adj(vertex)) {
-                    if (!marked[neighbor]) verticesToVisit.enqueue(neighbor);
+            marked[currentVertex] = true;
+
+            for (Integer adjVertex : graph.adj(currentVertex)) {
+
+                if (!marked[adjVertex]) {
+                    verticesToVisit.push(adjVertex);
                 }
-
-                marked[vertex] = true;
-                id[vertex] = count;
-                size[count]++;
             }
+
+            id[currentVertex] = count;
+            size[count]++;
         }
+
     }
 
     public boolean isStronglyConnected(int vertexA, int vertexB) {

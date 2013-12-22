@@ -20,7 +20,7 @@ public class Insertion {
 
         int length = numbers.length;
 
-        for (int i = 2; i < length; i++) {
+        for (int i = 1; i < length; i++) {
             for (int j = i; j > 0 && numbers[j] < numbers[j - 1]; j--) {
                 swap(numbers, j, j - 1);
             }
@@ -28,8 +28,9 @@ public class Insertion {
     }
 
     /**
-     * Sorts the provided array of integers through
-     * the insertion sort algorithm.
+     * Sorts the provided array of integers from the low
+     * index to the high index, using the insertion
+     * sort algorithm.
      * Note: This sort is O(n^2), so only use it
      * for nearly sorted or small arrays.
      *
@@ -52,14 +53,14 @@ public class Insertion {
      * Note: This sort is O(n^2), so only use it
      * for nearly sorted or small arrays.
      *
-     * @param a, the array of comparable objects
+     * @param array, the array of comparable objects
      */
-    public static void sort(Comparable[] a) {
-        int length = a.length;
+    public static void sort(Comparable[] array) {
+        int length = array.length;
 
-        for (int i = 2; i < length; i++) {
-            for (int j = i; j > 1 && less(a, j, j - 1); j--) {
-                swap(a, j, j - 1);
+        for (int i = 1; i < length; i++) {
+            for (int j = i; j > 0 && less(array, j, j - 1); j--) {
+                swap(array, j, j - 1);
             }
         }
     }
@@ -94,8 +95,8 @@ public class Insertion {
     public static void sort(Object[] a, Comparator c) {
         int length = a.length;
 
-        for (int i = 2; i < length; i++) {
-            for (int j = i; j > 1 && less(a, c, j, j - 1); j--) {
+        for (int i = 1; i < length; i++) {
+            for (int j = i; j > 0 && less(a, c, j, j - 1); j--) {
                 swap(a, j, j - 1);
             }
         }

@@ -9,11 +9,27 @@ public class QuickSort {
     private static final Random random = new Random();
     private static final int INSERTION_THRESHOLD = 47;
 
+    private QuickSort() {
+
+    }
+
+
+    /**
+     * Sorts the entire array of integers.
+     */
     public static void sort(int[] a) {
         sort(a, 0, a.length - 1);
     }
 
-    private static void sort(int[] a, int low, int high) {
+    /**
+     * Sorts the array of integers from the low index to
+     * the high one (both included).
+     *
+     * @param a
+     * @param low
+     * @param high
+     */
+    public static void sort(int[] a, int low, int high) {
 
         if (high - low < INSERTION_THRESHOLD) {
             Insertion.sort(a, low, high);
@@ -29,14 +45,24 @@ public class QuickSort {
 
     }
 
-    private static int partition(int[] a, int low, int high, int pivotIndex) {
+    /**
+     * Partitions the array from the low index to high
+     * index (both included) around the pivot at the
+     * given pivot index.
+     *
+     * @param a
+     * @param low
+     * @param high
+     * @param pivotIndex
+     */
+    public static int partition(int[] a, int low, int high, int pivotIndex) {
 
         int pivot = a[pivotIndex];
         swap(a, pivotIndex, high);
 
         int storeIndex = low;
 
-        for (int i = low + 1; i < high; i++) {
+        for (int i = low; i < high; i++) {
             if (pivot > a[i]) {
                 swap(a, i, storeIndex++);
             }
@@ -46,11 +72,22 @@ public class QuickSort {
         return storeIndex;
     }
 
+    /**
+     * Sorts the entire array of comparable objects.
+     */
     public static void sort(Comparable[] a) {
         sort(a, 0, a.length - 1);
     }
 
-    private static void sort(Comparable[] a, int low, int high) {
+    /**
+     * Sorts the array of comparable objects from the low index to
+     * the high one (both included).
+     *
+     * @param a
+     * @param low
+     * @param high
+     */
+    public static void sort(Comparable[] a, int low, int high) {
 
         if (high - low < INSERTION_THRESHOLD) {
             Insertion.sort(a, low, high);
@@ -66,14 +103,24 @@ public class QuickSort {
 
     }
 
-    private static int partition(Comparable[] a, int low, int high, int pivotIndex) {
+    /**
+     * Partitions the array from the low index to high
+     * index (both included) around the pivot at the
+     * given pivot index.
+     *
+     * @param a
+     * @param low
+     * @param high
+     * @param pivotIndex
+     */
+    public static int partition(Comparable[] a, int low, int high, int pivotIndex) {
 
         Comparable pivot = a[pivotIndex];
         swap(a, pivotIndex, high);
 
         int storeIndex = low;
 
-        for (int i = low + 1; i < high; i++) {
+        for (int i = low; i < high; i++) {
             if (pivot.compareTo(a[i]) > 0) {
                 swap(a, i, storeIndex++);
             }
@@ -90,14 +137,14 @@ public class QuickSort {
 
     private static void swap(int[] a, int index1, int index2) {
         int temp = a[index1];
-        a[index2] = a[index1];
-        a[index1] = temp;
+        a[index1] = a[index2];
+        a[index2] = temp;
     }
 
     private static void swap(Comparable[] a, int index1, int index2) {
         Comparable temp = a[index1];
-        a[index2] = a[index1];
-        a[index1] = temp;
+        a[index1] = a[index2];
+        a[index2] = temp;
     }
 
     public static void printArray(int[] a) {

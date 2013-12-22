@@ -10,29 +10,58 @@ public class MaximumPriorityQueue<Key> implements Iterable<Key> {
     private int size;
     private Comparator comparator;
 
+    /**
+     * Build a maximum priority queue, in which finding the
+     * maximum key and deleting it are O(1).
+     *
+     * @param capacity
+     */
     public MaximumPriorityQueue(int capacity) {
         priorityQueue = (Key[]) new Object[capacity + 1];
         size = 0;
     }
 
+    /**
+     * Build a maximum priority queue, in which finding the
+     * max and deleting it are O(1).
+     */
     public MaximumPriorityQueue() {
         this(1);
     }
 
-    public MaximumPriorityQueue(int capacity, Comparator c) {
+    /**
+     * Build a maximum priority queue, in which finding the
+     * max and deleting it are O(1).
+     *
+     * @param capacity
+     * @param comparator
+     */
+    public MaximumPriorityQueue(int capacity, Comparator comparator) {
         priorityQueue = (Key[]) new Object[capacity + 1];
         size = 0;
-        comparator = c;
+        this.comparator = comparator;
     }
 
+    /**
+     * Returns true if the priority queue is empty and
+     * false otherwise.
+     */
     public boolean isEmpty() {
         return (size == 0);
     }
 
+    /**
+     * Returns the size of the priority queue.
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Inserts the given key in the priority queue.
+     *
+     * @param key
+     */
     public void insert(Key key) {
         if (size >= priorityQueue.length - 1) resize(priorityQueue.length * 2);
 
@@ -41,53 +70,61 @@ public class MaximumPriorityQueue<Key> implements Iterable<Key> {
         swim(size);
     }
 
-    public Key deleteMax() {
+    /**
+     * Deletes the maximum key and returns it.
+     */
+    public Key deleteMax() throws NoSuchElementException {
 
         if (isEmpty()) throw new NoSuchElementException("Empty priority queue.");
 
-        Key key = priorityQueue[1];
+        Key max = priorityQueue[1];
 
         swap(1, size--);
-        sinkMax();
+        sink(1);
 
         priorityQueue[size + 1] = null;
-        if (size > 0 && (size == (priorityQueue.length - 1) / 4)) resize(priorityQueue.length / 2);
+        if ((size > 0) && (size == (priorityQueue.length - 1) / 4)) resize(priorityQueue.length / 2);
 
-        return key;
+        return max;
     }
 
-    public Key max() {
+    /**
+     * Returns the maximum key
+     */
+    public Key max() throws NoSuchElementException {
+
+        if (isEmpty()) throw new NoSuchElementException("Empty priority queue.");
+
         return priorityQueue[1];
     }
 
+    /**
+     * Helper functions
+     */
+
     private void swim(int rank) {
-        int parentRank = rank / 2;
-        while (parentRank > 0 && greater(rank, parentRank)) {
-            swap(rank, parentRank);
-            rank = parentRank;
-            parentRank = rank / 2;
+
+        while (rank > 1 && less(rank / 2, rank)) {
+            swap(rank, rank / 2);
+            rank = rank / 2;
         }
     }
 
-    private void sinkMax() {
-
-        int rank = 1;
-
-        while (2 * rank <= size) {
-            int j = 2 * rank;
-            if (j < size - 1 && greater(j + 1, j)) j++;
-
-            if (!greater(j, rank)) break;
-
-            swap(j, rank);
-            rank = j;
-
+    private void sink(int parent) {
+        while (2 * parent <= size) {
+            int child = 2 * parent;
+            if (child < size && less(child, child + 1)) child++;
+            if (!less(parent, child)) break;
+            swap(parent, child);
+            parent = child;
         }
     }
 
     private void resize(int newSize) {
         Key[] newPriorityQueue = (Key[]) new Object[newSize];
-        System.arraycopy(priorityQueue, 1, newPriorityQueue, 1, size);
+        for (int i = 1; i <= size; i++) {
+            newPriorityQueue[i] = priorityQueue[i];
+        }
         priorityQueue = newPriorityQueue;
     }
 
@@ -102,14 +139,27 @@ public class MaximumPriorityQueue<Key> implements Iterable<Key> {
         }
     }
 
+    private boolean less(int rank1, int rank2) {
+        if (comparator != null) {
+            return comparator.compare(priorityQueue[rank1], priorityQueue[rank2]) < 0;
+        } else {
+            return ((Comparable<Key>) priorityQueue[rank1]).compareTo(priorityQueue[rank2]) < 0;
+        }
+    }
+
     private void swap(int rank1, int rank2) {
         Key key = priorityQueue[rank1];
         priorityQueue[rank1] = priorityQueue[rank2];
         priorityQueue[rank2] = key;
     }
 
-    // Iterator
 
+    /**
+     * Returns an iterator over the keys in the priority queue,
+     * in decreasing order.
+     *
+     * @return
+     */
     public Iterator<Key> iterator() {
         return new HeapIterator();
     }
@@ -122,7 +172,8 @@ public class MaximumPriorityQueue<Key> implements Iterable<Key> {
             if (comparator == null) copy = new MaximumPriorityQueue(size);
             else copy = new MaximumPriorityQueue(size, comparator);
 
-            for (int i = 0; i < size; i++) {
+
+            for (int i = 1; i <= size; i++) {
                 copy.insert(priorityQueue[i]);
             }
 
@@ -137,6 +188,7 @@ public class MaximumPriorityQueue<Key> implements Iterable<Key> {
         }
 
         public Key next() {
+            if (!hasNext()) throw new NoSuchElementException();
             return copy.deleteMax();
         }
 
