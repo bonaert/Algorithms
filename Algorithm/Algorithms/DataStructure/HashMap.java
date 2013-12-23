@@ -89,22 +89,22 @@ public class HashMap<Key, Value> {
      * key is contained, provided that the hash
      * function of the key is uniformly distributed.
      *
-     * @param requiredCapacity
+     * @param capacity
      * @param loadFactor
      */
 
-    public HashMap(int requiredCapacity, double loadFactor) {
+    public HashMap(int capacity, double loadFactor) {
         size = 0;
 
         // Find a power of 2 >= requiredCapacity
-        int capacity = 1;
-        requiredCapacity = Math.min(requiredCapacity, MAXIMUM_CAPACITY);
-        while (capacity < requiredCapacity) capacity *= 2;
+        int actualCapacity = 1;
+        capacity = Math.min(capacity, MAXIMUM_CAPACITY);
+        while (actualCapacity < capacity) actualCapacity *= 2;
 
-        resizingThreshold = (int) Math.min(capacity * loadFactor, MAXIMUM_CAPACITY + 1);
+        resizingThreshold = (int) Math.min(actualCapacity * loadFactor, MAXIMUM_CAPACITY + 1);
         this.loadFactor = loadFactor;
 
-        entries = new Entry[capacity];
+        entries = new Entry[actualCapacity];
     }
 
 
@@ -192,10 +192,8 @@ public class HashMap<Key, Value> {
         while (entry != null) {
             Entry<Key, Value> next = entry.nextEntry;
 
-            entry.hash = computeHash(entry.key);
-            int index = indexFor(entry.hash, newCapacity);
-
             // [A] -> ... into [newEntry] -> [A] -> ... (add new entry at the beginning of the chain)
+            int index = indexFor(entry.hash, newCapacity);
             entry.nextEntry = newEntries[index];
             newEntries[index] = entry;
 
@@ -290,7 +288,6 @@ public class HashMap<Key, Value> {
         if (!entryExists(hash)) return false;
 
         Entry<Key, Value> entry = entries[index];
-
         while (entry != null) {
             if (entry.hasKey(key)) return true;
             entry = entry.nextEntry;
