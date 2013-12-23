@@ -3,10 +3,6 @@ package DataStructure;
 
 public class HashSet<E> {
 
-    private static final int DEFAULT_INITIAL_CAPACITY = 16;
-    private static final int MAXIMUM_CAPACITY = 1 << 30;
-    private static final double DEFAULT_LOAD_FACTOR = 0.75f;
-
     private final Object PRESENT = new Object();
     private transient HashMap<E, Object> map;
 
