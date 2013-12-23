@@ -111,6 +111,25 @@ public class HashMapTest {
         assertDoesNotContainValue(7);
     }
 
+    @Test
+    public void canCreateHashMapOfSizeOne() {
+        hashMap = new HashMap<Integer, Integer>(1);
+        for (int i = 0; i < 100; i++) {
+            hashMap.put(i, i * i);
+        }
+
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+            assertKeyValuePairIs(i, i * i);
+            assertContainsKey(i);
+            assertContainsValue(i * i);
+        }
+
+        assertIsNotEmpty();
+        assertSizeIsEqualTo(100);
+
+    }
+
     private void assertDoesNotContainKey(int key) {
         assertFalse(hashMap.containsKey(key));
     }

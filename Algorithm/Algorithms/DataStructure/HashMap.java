@@ -316,7 +316,7 @@ public class HashMap<Key, Value> {
     }
 
     private int computeHash(Key key) {
-        return (key.hashCode() & 0x7FFFFFF) % entries.length;
+        return (key.hashCode() & 0x7FFFFFF);
     }
 
     private int indexFor(int hash) {
