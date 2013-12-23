@@ -1,154 +1,92 @@
 package DataStructure;
 
 
-import java.util.Arrays;
+public class HashSet<E> {
 
-public class HashSet<Key> {
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+    private static final int MAXIMUM_CAPACITY = 1 << 30;
+    private static final double DEFAULT_LOAD_FACTOR = 0.75f;
 
-    private class Entry {
-
-        private Key key;
-        private Entry nextEntry;
-
-        public Entry(Key key, Entry nextEntry) {
-            this.key = key;
-            this.nextEntry = nextEntry;
-        }
-
-        public Key getKey() {
-            return key;
-        }
-
-        public Entry nextEntry() {
-            return nextEntry;
-        }
-
-        private void setNextEntry(Entry nextEntry) {
-            this.nextEntry = nextEntry;
-        }
-    }
-
-    private final int capacity;
-    private Entry[] entries;
-    private int size;
+    private final Object PRESENT = new Object();
+    private transient HashMap<E, Object> map;
 
     /**
-     * Creates a hash map, that is a map that
-     * associates a key with a value, but with very fast
-     * insertion, deletion, getting and check if the
-     * key is contained, provided that the hash
-     * function of the key is uniformly distributed.
+     * Creates a hash set, that is a set with very fast
+     * insertion, deletion, contain methods, provided that the hash
+     * function of the elements is uniformly distributed.
+     */
+    public HashSet() {
+        map = new HashMap<E, Object>();
+    }
+
+    /**
+     * Creates a hash set, that is a set with very fast
+     * insertion, deletion, contain methods, provided that the hash
+     * function of the elements is uniformly distributed.
      *
-     * @param capacity
+     * @param initialCapacity
      */
-    public HashSet(int capacity) {
-        size = 0;
-        this.capacity = capacity;
-        entries = (Entry[]) new Object[capacity];
+    public HashSet(int initialCapacity) {
+        map = new HashMap<E, Object>(initialCapacity);
     }
 
     /**
-     * Puts the given key and value in the hash map.
+     * Creates a hash set, that is a set with very fast
+     * insertion, deletion, contain methods, provided that the hash
+     * function of the elements is uniformly distributed.
      *
-     * @param key
+     * @param initialCapacity
+     * @param loadFactor
      */
-    public void put(Key key) throws Exception {
-
-        if (capacity == size) throw new Exception("Full hash set");
-
-        int hash = computeHash(key);
-        Entry entry = entries[hash];
-
-        Entry newEntry = new Entry(key, null);
-
-        if (isEntry(hash)) {
-            while (entry.nextEntry != null) {
-                entry = entry.nextEntry;
-            }
-            entry.setNextEntry(newEntry);
-            entry = entry.nextEntry();
-
-        }
-
-        entry = newEntry;
-        size++;
+    public HashSet(int initialCapacity, double loadFactor) {
+        map = new HashMap<E, Object>(initialCapacity, loadFactor);
     }
 
     /**
-     * Remove the key and value in the hash map.
-     * If the key is not present, this methods doesn't
-     * do anything.
+     * Puts the given element and value in the hash set.
      */
-    public void remove(Key key) {
-
-        int hash = computeHash(key);
-        Entry entry = entries[hash];
-
-        if (entry == null) return;
-
-        if (entry.getKey().equals(key)) {
-            entries[hash] = entry.nextEntry();
-            size--;
-            return;
-        }
-
-        while (entry.nextEntry != null) {
-
-            if (entry.nextEntry.getKey().equals(key)) {
-                entry = entry.nextEntry().nextEntry();
-                size--;
-                return;
-            }
-        }
-
+    public void put(E element) throws Exception {
+        map.put(element, PRESENT);
     }
 
     /**
-     * Returns true if the key is in the hash map,
+     * Remove the element in the hash set. Returns true
+     * if the set contained the element, otherwise false.
+     */
+    public boolean remove(E element) {
+        return map.remove(element) == PRESENT;
+    }
+
+    /**
+     * Returns true if the element is in the hash set,
      * otherwise returns false;
      */
-    public boolean contains(Key key) {
-        int hash = computeHash(key);
-
-        Entry entry = entries[hash];
-        if (entry == null) return false;
-
-        while (entry != null && !entry.getKey().equals(key)) {
-            entry = entry.nextEntry();
-        }
-
-        return (entry != null);
-    }
-
-    private int computeHash(Key key) {
-        return (key.hashCode() & 0x7FFFFFF) % capacity;
-    }
-
-    private boolean isEntry(int hash) {
-        return entries[hash] != null;
+    public boolean contains(E element) {
+        return map.containsKey(element);
     }
 
     /**
-     * Returns true if the hash map is empty,
+     * Returns true if the hash set is empty,
      * otherwise return false.
      */
     public boolean isEmpty() {
-        return (size == 0);
+        return map.isEmpty();
     }
 
     /**
-     * Returns the size of the hash map.
+     * Returns the size of the hash set.
      */
     public int size() {
-        return size;
+        return map.size();
     }
 
+
+    /**
+     * Clear all the elements in the hash set.
+     */
     public void clear() {
-        Arrays.fill(entries, null);
-        size = 0;
+        map.clear();
     }
-
-
 }
 
 
