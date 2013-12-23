@@ -28,14 +28,10 @@ public class HashMap<Key, Value> {
             return value;
         }
 
-        public Value setValue(Value value) {
-            Value oldValue = this.value;
-            this.value = value;
+        public Value setValue(Value newValue) {
+            Value oldValue = value;
+            value = newValue;
             return oldValue;
-        }
-
-        public boolean isLastEntryInChain() {
-            return nextEntry == null;
         }
 
         public boolean hasKey(Key key) {
@@ -47,14 +43,15 @@ public class HashMap<Key, Value> {
         }
     }
 
-    private int capacity;
+    static final int DEFAULT_INITIAL_CAPACITY = 16;
+    static final int MAXIMUM_CAPACITY = 1 << 30;
+
+    static final double DEFAULT_LOAD_FACTOR = 0.75f;
+
     transient Entry<Key, Value>[] entries;
     transient int size;
+    private int resizingThreshold;
     final double loadFactor;
-
-
-    static final double DEFAULT_LOAD_CAPACITY = 0.75;
-    static final int DEFAULT_INITIAL_CAPACITY = 16;
 
 
     /**
@@ -66,7 +63,7 @@ public class HashMap<Key, Value> {
      */
 
     public HashMap() {
-        this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_CAPACITY);
+        this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
 
@@ -81,7 +78,7 @@ public class HashMap<Key, Value> {
      */
 
     public HashMap(int capacity) {
-        this(capacity, DEFAULT_LOAD_CAPACITY);
+        this(capacity, DEFAULT_LOAD_FACTOR);
     }
 
 
@@ -92,21 +89,22 @@ public class HashMap<Key, Value> {
      * key is contained, provided that the hash
      * function of the key is uniformly distributed.
      *
-     * @param initialCapacity
+     * @param requiredCapacity
      * @param loadFactor
      */
 
-    public HashMap(int initialCapacity, double loadFactor) {
+    public HashMap(int requiredCapacity, double loadFactor) {
         size = 0;
 
-        // Find a power of 2 >= initialCapacity
+        // Find a power of 2 >= requiredCapacity
         int capacity = 1;
-        while (capacity < initialCapacity) capacity *= 2;
+        requiredCapacity = Math.min(requiredCapacity, MAXIMUM_CAPACITY);
+        while (capacity < requiredCapacity) capacity *= 2;
 
-        this.capacity = capacity;
+        resizingThreshold = (int) Math.min(capacity * loadFactor, MAXIMUM_CAPACITY + 1);
         this.loadFactor = loadFactor;
 
-        entries = new Entry[this.capacity];
+        entries = new Entry[capacity];
     }
 
 
@@ -120,7 +118,8 @@ public class HashMap<Key, Value> {
         if (key == null) throw new IllegalArgumentException("Null keys are not allowed.");
 
         int hash = computeHash(key);
-        Entry<Key, Value> entry = entries[hash];
+        int index = indexFor(hash);
+        Entry<Key, Value> entry = entries[index];
 
         while (entry != null && !entry.hasKey(key)) {
             entry = entry.nextEntry;
@@ -139,26 +138,21 @@ public class HashMap<Key, Value> {
      * @param value
      */
     public Value put(Key key, Value value) {
-        int oldSize = size;
         if (key == null) throw new IllegalArgumentException("Illegal keys are not allowed");
-
-        if (size >= capacity * loadFactor) resize(2 * capacity);
 
         Value currentValue = updateKeyValuePair(key, value);
 
         if (currentValue == null) {
-            int hash = computeHash(key);
-            addEntry(key, value, hash);
+            addEntry(key, value);
         }
 
-        System.out.println("Key: " + key + "   Value: " + value);
-        System.out.println(oldSize + "  --->  " + size);
         return currentValue;
     }
 
     private Value updateKeyValuePair(Key key, Value value) {
         int hash = computeHash(key);
-        Entry<Key, Value> entry = entries[hash];
+        int index = indexFor(hash);
+        Entry<Key, Value> entry = entries[index];
 
         while (entry != null) {
             if (entry.hash == hash && entry.hasKey(key)) {
@@ -173,57 +167,59 @@ public class HashMap<Key, Value> {
     }
 
     private void resize(int newCapacity) {
-        System.out.println("Resizing to capacity " + newCapacity);
-        Entry<Key, Value>[] oldEntries = entries;
-        entries = new Entry[newCapacity];
+        int oldCapacity = entries.length;
+        if (oldCapacity == MAXIMUM_CAPACITY) {
+            resizingThreshold = Integer.MAX_VALUE;
+            return;
+        }
 
-        capacity = newCapacity;
-        size = 0;
+        Entry<Key, Value>[] newEntries = new Entry[newCapacity];
 
-        transferEntries(oldEntries);
+        transferEntries(newEntries);
+        entries = newEntries;
+        resizingThreshold = (int) Math.min(newCapacity * loadFactor, MAXIMUM_CAPACITY + 1);
     }
 
-    private void transferEntries(Entry<Key, Value>[] oldEntries) {
-        for (Entry<Key, Value> oldFirstEntryInChain : oldEntries) {
-            addAllEntriesWithSameHash(oldFirstEntryInChain);
+    private void transferEntries(Entry<Key, Value>[] newEntries) {
+        for (Entry<Key, Value> entry : entries) {
+            addAllEntriesWithSameHash(entry, newEntries);
         }
     }
 
 
-    private void addAllEntriesWithSameHash(Entry<Key, Value> firstEntryInChain) {
-        for (Entry<Key, Value> entry = firstEntryInChain; entry != null; entry = entry.nextEntry) {
-            addEntry(entry);
+    private void addAllEntriesWithSameHash(Entry<Key, Value> entry, Entry<Key, Value>[] newEntries) {
+        int newCapacity = newEntries.length;
+        while (entry != null) {
+            Entry<Key, Value> next = entry.nextEntry;
+
+            entry.hash = computeHash(entry.key);
+            int index = indexFor(entry.hash, newCapacity);
+
+            // [A] -> ... into [newEntry] -> [A] -> ... (add new entry at the beginning of the chain)
+            entry.nextEntry = newEntries[index];
+            newEntries[index] = entry;
+
+            entry = next;
         }
     }
 
-    private void addEntry(Entry<Key, Value> entry) {
-        Key key = entry.getKey();
-        Value value = entry.getValue();
+    private void addEntry(Key key, Value value) {
         int hash = computeHash(key);
-        addEntry(key, value, hash);
-    }
+        int index = indexFor(hash);
 
-    private void addEntry(Key key, Value value, int hash) {
-        Entry<Key, Value> newEntry = new Entry<Key, Value>(hash, key, value, null);
-
-        if (entryExists(hash)) {
-            Entry<Key, Value> lastEntry = getLastEntry(hash);
-            lastEntry.nextEntry = newEntry;
-        } else {
-            entries[hash] = newEntry;
+        if ((size >= resizingThreshold) && (entries[index] != null)) {
+            resize(2 * entries.length);
+            index = indexFor(hash);
         }
 
+        addEntry(key, value, hash, index);
+    }
+
+    private void addEntry(Key key, Value value, int hash, int index) {
+        Entry<Key, Value> firstEntry = entries[index];
+        entries[index] = new Entry<Key, Value>(hash, key, value, firstEntry);
         size++;
     }
-
-    private Entry<Key, Value> getLastEntry(int hash) {
-        Entry<Key, Value> entry = entries[hash];
-        while (!entry.isLastEntryInChain()) {
-            entry = entry.nextEntry;
-        }
-        return entry;
-    }
-
 
     /**
      * Remove the key and value in the hash map.
@@ -239,22 +235,23 @@ public class HashMap<Key, Value> {
 
     /**
      * Removes and returns the entry associated with the specified key
-     * in the HashMap.  Returns null if the HashMap contains no mapping
+     * in the HashMapCopy.  Returns null if the HashMapCopy contains no mapping
      * for this key.
      */
     private Entry<Key, Value> removeEntry(Key key) {
-        int keyHash = computeHash(key);
-        Entry<Key, Value> prev = entries[keyHash];
+        int hash = computeHash(key);
+        int index = indexFor(hash);
+        Entry<Key, Value> prev = entries[index];
         Entry<Key, Value> entry = prev;
 
         while (entry != null) {
             Entry<Key, Value> next = entry.nextEntry;
 
-            if (entry.hash == keyHash && entry.hasKey(key)) {
+            if (entry.hash == hash && entry.hasKey(key)) {
                 boolean isFirstEntry = (prev == entry);
                 if (isFirstEntry) {
                     // [Good Entry] -> [next] -> ... transforms into [next] -> ...
-                    entries[keyHash] = next;
+                    entries[index] = next;
                 } else {
                     // ... [prev] -> [Good Entry] -> [next]  transform into ... [prev] -> [next]
                     prev.nextEntry = next;
@@ -289,9 +286,10 @@ public class HashMap<Key, Value> {
         if (key == null) throw new IllegalArgumentException("Null keys are not allowed.");
 
         int hash = computeHash(key);
+        int index = indexFor(hash);
         if (!entryExists(hash)) return false;
 
-        Entry<Key, Value> entry = entries[hash];
+        Entry<Key, Value> entry = entries[index];
 
         while (entry != null) {
             if (entry.hasKey(key)) return true;
@@ -321,7 +319,15 @@ public class HashMap<Key, Value> {
     }
 
     private int computeHash(Key key) {
-        return (key.hashCode() & 0x7FFFFFF) % capacity;
+        return (key.hashCode() & 0x7FFFFFF) % entries.length;
+    }
+
+    private int indexFor(int hash) {
+        return indexFor(hash, entries.length);
+    }
+
+    private int indexFor(int hash, int capacity) {
+        return hash % capacity;
     }
 
     private boolean entryExists(int hash) {
