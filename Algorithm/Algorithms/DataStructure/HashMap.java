@@ -11,7 +11,7 @@ public class HashMap<Key, Value> {
         final Key key;
         Value value;
         Entry<Key, Value> nextEntry;
-        int hash;
+        final int hash;
 
         Entry(int hash, Key key, Value value, Entry<Key, Value> nextEntry) {
             this.key = key;
@@ -39,7 +39,7 @@ public class HashMap<Key, Value> {
         }
 
         public boolean hasValue(Value value) {
-            return value.equals(this.value);
+            return (value == this.value) || (value != null && value.equals(this.value));
         }
     }
 
