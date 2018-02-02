@@ -33,9 +33,6 @@ public class Statistics {
             }
         }
 
-        // For garbage collection
-        occurences = null;
-
         if (size % 2 == 0) {
             median = (numbers[size / 2] + numbers[size / 2 - 1]) / 2;
         } else {
