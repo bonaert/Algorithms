@@ -51,7 +51,7 @@ I wrote the code as I followed Sedgewick's Algorithms course, and tried to under
 
 **Algorithms**
 
-* [Find the topological order](https://github.com/bonaert/Algorithms/blob/master/Algorithm/Algorithms/Graphs/TopologicalOrder.java)
+- [Find the topological order](https://github.com/bonaert/Algorithms/blob/master/Algorithm/Algorithms/Graphs/TopologicalOrder.java)
 - [Find cycle (if it exists)](https://github.com/bonaert/Algorithms/blob/master/Algorithm/Algorithms/Graphs/GraphCycle.java)
 - [Find the connected components](https://github.com/bonaert/Algorithms/blob/master/Algorithm/Algorithms/Graphs/ConnectedComponents.java)
 - [Depth First Search graph orderings](https://github.com/bonaert/Algorithms/blob/master/Algorithm/Algorithms/Graphs/DepthFirstSearchOrder.java): Post Order and Pre Order
