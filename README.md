@@ -5,8 +5,6 @@ An implementation of various Algorithms in Java, based on the book Algorithms by
 
 I wrote the code as I followed Sedgewick's Algorithms course, and tried to understand the various algorithms. I wanted to make the implementation clear, readable and easy to understand. I believe it's correct, but since it was my first time learning about these algorithms, so I don't guarantee that the code is bug free.
 
-# Algorithms
-
 ## Data Structures
 
 * [HashMap](https://github.com/bonaert/Algorithms/blob/master/Algorithm/Algorithms/DataStructure/HashMap.java)
